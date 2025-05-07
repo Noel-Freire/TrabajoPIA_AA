@@ -1,0 +1,5 @@
+
+ Comparación entre todos los modelos 
+ 
+ p-valor KrusW: 0.045488737398838706
+Aceptamos la hipótesis: los modelos son iguales

@@ -1,0 +1,59 @@
+\indexentry{module@\spxentry{module}!subir\_datos@\spxentry{subir\_datos}|hyperpage}{3}
+\indexentry{subir\_datos@\spxentry{subir\_datos}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{cargar\_datos() (en el módulo subir\_datos)@\spxentry{cargar\_datos()}\spxextra{en el módulo subir\_datos}|hyperpage}{3}
+\indexentry{module@\spxentry{module}!normalizar@\spxentry{normalizar}|hyperpage}{3}
+\indexentry{normalizar@\spxentry{normalizar}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{normalizar\_datos() (en el módulo normalizar)@\spxentry{normalizar\_datos()}\spxextra{en el módulo normalizar}|hyperpage}{3}
+\indexentry{module@\spxentry{module}!guardar\_metricas@\spxentry{guardar\_metricas}|hyperpage}{3}
+\indexentry{guardar\_metricas@\spxentry{guardar\_metricas}!module@\spxentry{module}|hyperpage}{3}
+\indexentry{guardar\_metricas() (en el módulo guardar\_metricas)@\spxentry{guardar\_metricas()}\spxextra{en el módulo guardar\_metricas}|hyperpage}{3}
+\indexentry{module@\spxentry{module}!metricas\_clustering@\spxentry{metricas\_clustering}|hyperpage}{4}
+\indexentry{metricas\_clustering@\spxentry{metricas\_clustering}!module@\spxentry{module}|hyperpage}{4}
+\indexentry{guardar\_metricas\_clustering() (en el módulo metricas\_clustering)@\spxentry{guardar\_metricas\_clustering()}\spxextra{en el módulo metricas\_clustering}|hyperpage}{4}
+\indexentry{module@\spxentry{module}!comparacion\_n\_covariables@\spxentry{comparacion\_n\_covariables}|hyperpage}{4}
+\indexentry{comparacion\_n\_covariables@\spxentry{comparacion\_n\_covariables}!module@\spxentry{module}|hyperpage}{4}
+\indexentry{comparar\_todos\_modelos() (en el módulo comparacion\_n\_covariables)@\spxentry{comparar\_todos\_modelos()}\spxextra{en el módulo comparacion\_n\_covariables}|hyperpage}{4}
+\indexentry{diagrama\_cajas() (en el módulo comparacion\_n\_covariables)@\spxentry{diagrama\_cajas()}\spxextra{en el módulo comparacion\_n\_covariables}|hyperpage}{4}
+\indexentry{inicio\_comp() (en el módulo comparacion\_n\_covariables)@\spxentry{inicio\_comp()}\spxextra{en el módulo comparacion\_n\_covariables}|hyperpage}{4}
+\indexentry{module@\spxentry{module}!clustering@\spxentry{clustering}|hyperpage}{5}
+\indexentry{clustering@\spxentry{clustering}!module@\spxentry{module}|hyperpage}{5}
+\indexentry{dbscan() (en el módulo clustering)@\spxentry{dbscan()}\spxextra{en el módulo clustering}|hyperpage}{5}
+\indexentry{kmeans() (en el módulo clustering)@\spxentry{kmeans()}\spxextra{en el módulo clustering}|hyperpage}{5}
+\indexentry{module@\spxentry{module}!Modelos@\spxentry{Modelos}|hyperpage}{7}
+\indexentry{Modelos@\spxentry{Modelos}!module@\spxentry{module}|hyperpage}{7}
+\indexentry{calculo\_tiempos() (en el módulo Modelos)@\spxentry{calculo\_tiempos()}\spxextra{en el módulo Modelos}|hyperpage}{7}
+\indexentry{metricas\_ann() (en el módulo Modelos)@\spxentry{metricas\_ann()}\spxextra{en el módulo Modelos}|hyperpage}{7}
+\indexentry{metricas\_rfc\_knn() (en el módulo Modelos)@\spxentry{metricas\_rfc\_knn()}\spxextra{en el módulo Modelos}|hyperpage}{7}
+\indexentry{model() (en el módulo Modelos)@\spxentry{model()}\spxextra{en el módulo Modelos}|hyperpage}{8}
+\indexentry{module@\spxentry{module}!entrenar\_modelos@\spxentry{entrenar\_modelos}|hyperpage}{8}
+\indexentry{entrenar\_modelos@\spxentry{entrenar\_modelos}!module@\spxentry{module}|hyperpage}{8}
+\indexentry{define\_model\_ann() (en el módulo entrenar\_modelos)@\spxentry{define\_model\_ann()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{8}
+\indexentry{entrenar\_modelo\_ann() (en el módulo entrenar\_modelos)@\spxentry{entrenar\_modelo\_ann()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{8}
+\indexentry{entrenar\_modelo\_knn() (en el módulo entrenar\_modelos)@\spxentry{entrenar\_modelo\_knn()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{8}
+\indexentry{entrenar\_modelo\_rfc() (en el módulo entrenar\_modelos)@\spxentry{entrenar\_modelo\_rfc()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{8}
+\indexentry{param\_KNN() (en el módulo entrenar\_modelos)@\spxentry{param\_KNN()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{8}
+\indexentry{param\_RFC() (en el módulo entrenar\_modelos)@\spxentry{param\_RFC()}\spxextra{en el módulo entrenar\_modelos}|hyperpage}{9}
+\indexentry{module@\spxentry{module}!Seleccion\_ejecucion@\spxentry{Seleccion\_ejecucion}|hyperpage}{9}
+\indexentry{Seleccion\_ejecucion@\spxentry{Seleccion\_ejecucion}!module@\spxentry{module}|hyperpage}{9}
+\indexentry{multihilo() (en el módulo Seleccion\_ejecucion)@\spxentry{multihilo()}\spxextra{en el módulo Seleccion\_ejecucion}|hyperpage}{9}
+\indexentry{multiproceso() (en el módulo Seleccion\_ejecucion)@\spxentry{multiproceso()}\spxextra{en el módulo Seleccion\_ejecucion}|hyperpage}{9}
+\indexentry{n\_jobs() (en el módulo Seleccion\_ejecucion)@\spxentry{n\_jobs()}\spxextra{en el módulo Seleccion\_ejecucion}|hyperpage}{9}
+\indexentry{single() (en el módulo Seleccion\_ejecucion)@\spxentry{single()}\spxextra{en el módulo Seleccion\_ejecucion}|hyperpage}{9}
+\indexentry{module@\spxentry{module}!tsne@\spxentry{tsne}|hyperpage}{11}
+\indexentry{tsne@\spxentry{tsne}!module@\spxentry{module}|hyperpage}{11}
+\indexentry{tsne() (en el módulo tsne)@\spxentry{tsne()}\spxextra{en el módulo tsne}|hyperpage}{11}
+\indexentry{module@\spxentry{module}!leer\_metricas@\spxentry{leer\_metricas}|hyperpage}{11}
+\indexentry{leer\_metricas@\spxentry{leer\_metricas}!module@\spxentry{module}|hyperpage}{11}
+\indexentry{get\_data() (en el módulo leer\_metricas)@\spxentry{get\_data()}\spxextra{en el módulo leer\_metricas}|hyperpage}{11}
+\indexentry{plot\_accuracy\_evolution() (en el módulo leer\_metricas)@\spxentry{plot\_accuracy\_evolution()}\spxextra{en el módulo leer\_metricas}|hyperpage}{11}
+\indexentry{plot\_classes\_roc\_curves() (en el módulo leer\_metricas)@\spxentry{plot\_classes\_roc\_curves()}\spxextra{en el módulo leer\_metricas}|hyperpage}{12}
+\indexentry{plot\_confusion\_matrix() (en el módulo leer\_metricas)@\spxentry{plot\_confusion\_matrix()}\spxextra{en el módulo leer\_metricas}|hyperpage}{12}
+\indexentry{plot\_metrics() (en el módulo leer\_metricas)@\spxentry{plot\_metrics()}\spxextra{en el módulo leer\_metricas}|hyperpage}{12}
+\indexentry{plot\_roc\_curves() (en el módulo leer\_metricas)@\spxentry{plot\_roc\_curves()}\spxextra{en el módulo leer\_metricas}|hyperpage}{12}
+\indexentry{read\_excel\_file() (en el módulo leer\_metricas)@\spxentry{read\_excel\_file()}\spxextra{en el módulo leer\_metricas}|hyperpage}{13}
+\indexentry{module@\spxentry{module}!Matriz\_correlacion@\spxentry{Matriz\_correlacion}|hyperpage}{13}
+\indexentry{Matriz\_correlacion@\spxentry{Matriz\_correlacion}!module@\spxentry{module}|hyperpage}{13}
+\indexentry{Variables\_correlacion() (en el módulo Matriz\_correlacion)@\spxentry{Variables\_correlacion()}\spxextra{en el módulo Matriz\_correlacion}|hyperpage}{13}
+\indexentry{module@\spxentry{module}!Principales\_caracteristicas@\spxentry{Principales\_caracteristicas}|hyperpage}{13}
+\indexentry{Principales\_caracteristicas@\spxentry{Principales\_caracteristicas}!module@\spxentry{module}|hyperpage}{13}
+\indexentry{pca() (en el módulo Principales\_caracteristicas)@\spxentry{pca()}\spxextra{en el módulo Principales\_caracteristicas}|hyperpage}{13}

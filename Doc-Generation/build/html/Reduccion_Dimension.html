@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funciones de Reducción de Dimensionalidad &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Funciones Visualizacion" href="Funciones_Visualizacion.html" />
+    <link rel="prev" title="Funciones Clustering" href="Clustering.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Funciones de Reducción de Dimensionalidad</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Modelos.calculo_tiempos"><code class="docutils literal notranslate"><span class="pre">calculo_tiempos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Modelos.metricas_ann"><code class="docutils literal notranslate"><span class="pre">metricas_ann()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Modelos.metricas_rfc_knn"><code class="docutils literal notranslate"><span class="pre">metricas_rfc_knn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Modelos.model"><code class="docutils literal notranslate"><span class="pre">model()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.define_model_ann"><code class="docutils literal notranslate"><span class="pre">define_model_ann()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.entrenar_modelo_ann"><code class="docutils literal notranslate"><span class="pre">entrenar_modelo_ann()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.entrenar_modelo_knn"><code class="docutils literal notranslate"><span class="pre">entrenar_modelo_knn()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.entrenar_modelo_rfc"><code class="docutils literal notranslate"><span class="pre">entrenar_modelo_rfc()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.param_KNN"><code class="docutils literal notranslate"><span class="pre">param_KNN()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#entrenar_modelos.param_RFC"><code class="docutils literal notranslate"><span class="pre">param_RFC()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Seleccion_ejecucion.multihilo"><code class="docutils literal notranslate"><span class="pre">multihilo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Seleccion_ejecucion.multiproceso"><code class="docutils literal notranslate"><span class="pre">multiproceso()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Seleccion_ejecucion.n_jobs"><code class="docutils literal notranslate"><span class="pre">n_jobs()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Seleccion_ejecucion.single"><code class="docutils literal notranslate"><span class="pre">single()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Funciones de Reducción de Dimensionalidad</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Reduccion_Dimension.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-Modelos">
+<span id="funciones-de-reduccion-de-dimensionalidad"></span><h1>Funciones de Reducción de Dimensionalidad<a class="headerlink" href="#module-Modelos" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="Modelos.calculo_tiempos">
+<span class="sig-prename descclassname"><span class="pre">Modelos.</span></span><span class="sig-name descname"><span class="pre">calculo_tiempos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_componentes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reductor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Modelos.html#calculo_tiempos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Modelos.calculo_tiempos" title="Link to this definition"></a></dt>
+<dd><p>Realiza validación cruzada estratificada con un modelo XGBoost y calcula métricas de rendimiento.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>k (int): Número de particiones para la validación cruzada.
+X_scaled(Dataframe): Lista de características extraídas de las imágenes.
+y (series): Lista con las etiquetas de las imágenes.
+n_componentes (int): Número de componentes principales a utilizar.
+reductor (str): Método de reducción de dimensionalidad (“PCA”, “ICA” o ninguno).
+modelo (str): Tipo de modelo a utilizar (“rfc” o “knn”).</p>
+</dd>
+<dt>Returns:</dt><dd><p>K_metrics (dict): Diccionario con las métricas de rendimiento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Modelos.metricas_ann">
+<span class="sig-prename descclassname"><span class="pre">Modelos.</span></span><span class="sig-name descname"><span class="pre">metricas_ann</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_secuencial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_multihilo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_multiproceso</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Modelos.html#metricas_ann"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Modelos.metricas_ann" title="Link to this definition"></a></dt>
+<dd><p>Realiza validación cruzada estratificada con un modelo ANN y calcula métricas de rendimiento.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+X_scaled (DataFrame): Matriz de datos escalados que serán la entrada al modelo.
+y (Series): Vector de las variables de salida del modelo.
+tiempo_secuencial (float): Tiempo de ejecución secuencial.
+tiempo_multihilo (float): Tiempo de ejecución multihilo.
+tiempo_multiproceso (float): Tiempo de ejecución multiproceso.</p>
+</dd>
+<dt>Returns:</dt><dd><p>K_metrics (dict): Diccionario con las métricas de rendimiento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Modelos.metricas_rfc_knn">
+<span class="sig-prename descclassname"><span class="pre">Modelos.</span></span><span class="sig-name descname"><span class="pre">metricas_rfc_knn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_secuencial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_multihilo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_multiproceso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tiempo_n_jobs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Modelos.html#metricas_rfc_knn"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Modelos.metricas_rfc_knn" title="Link to this definition"></a></dt>
+<dd><p>Realiza validación cruzada estratificada con un modelo RFC o KNN y calcula métricas de rendimiento.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+X_scaled (DataFrame): Matriz de datos escalados que serán la entrada al modelo.
+y (Series): Vector de las variables de salida del modelo.
+tiempo_secuencial (float): Tiempo de ejecución secuencial.
+tiempo_multihilo (float): Tiempo de ejecución multihilo.
+tiempo_multiproceso (float): Tiempo de ejecución multiproceso.
+tiempo_n_jobs (float): Tiempo de ejecución con n_jobs.
+metodo (str): Método a utilizar (“RFC” o “KNN”).</p>
+</dd>
+<dt>Returns:</dt><dd><p>K_metrics (dict): Diccionario con las métricas de rendimiento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Modelos.model">
+<span class="sig-prename descclassname"><span class="pre">Modelos.</span></span><span class="sig-name descname"><span class="pre">model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_componentes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reductor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Modelos.html#model"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Modelos.model" title="Link to this definition"></a></dt>
+<dd><p>Entrena y evalúa un modelo XGBoost utilizando características escaladas.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled(Dataframe): Matriz de datos escalados que seran la entrada al modelo.
+y(Series): Vector de las variables de salida del modelo.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-entrenar_modelos">
+<dt class="sig sig-object py" id="entrenar_modelos.define_model_ann">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">define_model_ann</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">caracteristicas</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_clases</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#define_model_ann"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.define_model_ann" title="Link to this definition"></a></dt>
+<dd><p>Define un modelo de red neuronal con arquitectura ANN para clasificación multiclase.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>caracteristicas (int): Número de características de entrada.
+num_clases (int): Número de clases para la clasificación.</p>
+</dd>
+<dt>Returns:</dt><dd><p>model (Sequential): Modelo ANN compilado.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entrenar_modelos.entrenar_modelo_ann">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">entrenar_modelo_ann</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#entrenar_modelo_ann"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.entrenar_modelo_ann" title="Link to this definition"></a></dt>
+<dd><p>Función que entrena el modelo ANN utilizando diferentes métodos (secuencial, multihilo, multiproceso).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled (array): Datos de entrada escalados.
+train_idx (array): Índices de entrenamiento.
+val_idx (array): Índices de validación.
+y (array): Etiquetas de clase.
+mode (str): Modo de entrenamiento (“secuencial”, “multihilo”, “multiproceso”, “n_jobs”).</p>
+</dd>
+<dt>Returns:</dt><dd><p>model (Sequential): Modelo entrenado.
+x_val (array): Datos de validación.
+y_val (array): Etiquetas de validación.
+history (History): Historial del entrenamiento.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entrenar_modelos.entrenar_modelo_knn">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">entrenar_modelo_knn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#entrenar_modelo_knn"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.entrenar_modelo_knn" title="Link to this definition"></a></dt>
+<dd><p>Función que entrena el modelo K-Nearest Neighbors utilizando diferentes métodos (secuencial, multihilo, multiproceso).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled (array): Datos de entrada escalados.
+train_idx (array): Índices de entrenamiento.
+val_idx (array): Índices de validación.
+y (array): Etiquetas de clase.
+mode (str): Modo de entrenamiento (“secuencial”, “multihilo”, “multiproceso”, “n_jobs”).</p>
+</dd>
+<dt>Returns:</dt><dd><p>modelo_fold (KNeighborsClassifier): Modelo entrenado.
+x_val (array): Datos de validación.
+y_val (array): Etiquetas de validación.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entrenar_modelos.entrenar_modelo_rfc">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">entrenar_modelo_rfc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_idx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#entrenar_modelo_rfc"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.entrenar_modelo_rfc" title="Link to this definition"></a></dt>
+<dd><p>Función que entrena el modelo de Random Forest utilizando diferentes métodos (secuencial, multihilo, multiproceso).</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled (array): Datos de entrada escalados.
+train_idx (array): Índices de entrenamiento.
+val_idx (array): Índices de validación.
+y (array): Etiquetas de clase.
+mode (str): Modo de entrenamiento (“secuencial”, “multihilo”, “multiproceso”, “n_jobs”).</p>
+</dd>
+<dt>Returns:</dt><dd><p>modelo_fold (RandomForestClassifier): Modelo entrenado.
+x_val (array): Datos de validación.
+y_val (array): Etiquetas de validación.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entrenar_modelos.param_KNN">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">param_KNN</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#param_KNN"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.param_KNN" title="Link to this definition"></a></dt>
+<dd><p>Función que define los parámetros del modelo KNN.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>parametros_KNN (dict): Parámetros del modelo KNN.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="entrenar_modelos.param_RFC">
+<span class="sig-prename descclassname"><span class="pre">entrenar_modelos.</span></span><span class="sig-name descname"><span class="pre">param_RFC</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/entrenar_modelos.html#param_RFC"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#entrenar_modelos.param_RFC" title="Link to this definition"></a></dt>
+<dd><p>Función que define los parámetros del modelo Random Forest.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>parametros_RFC (dict): Parámetros del modelo Random Forest.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-Seleccion_ejecucion">
+<dt class="sig sig-object py" id="Seleccion_ejecucion.multihilo">
+<span class="sig-prename descclassname"><span class="pre">Seleccion_ejecucion.</span></span><span class="sig-name descname"><span class="pre">multihilo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Seleccion_ejecucion.html#multihilo"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Seleccion_ejecucion.multihilo" title="Link to this definition"></a></dt>
+<dd><p>Entrena un modelo de clasificación secuencialmente.
+Según el valor metodo llamará a la función de entrenamiento correspondiente.
+Args:</p>
+<blockquote>
+<div><p>X_scaled (np.ndarray): Datos de entrada escalados.
+y (np.ndarray): Etiquetas de los datos.
+kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+metodo (str): Método de entrenamiento a utilizar («RFC», «KNN», «ANN»).</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Seleccion_ejecucion.multiproceso">
+<span class="sig-prename descclassname"><span class="pre">Seleccion_ejecucion.</span></span><span class="sig-name descname"><span class="pre">multiproceso</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Seleccion_ejecucion.html#multiproceso"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Seleccion_ejecucion.multiproceso" title="Link to this definition"></a></dt>
+<dd><p>Procede a realizar un entrenamiento secuencial del modelo.
+Según el valor metodo llamará a la función de entrenamiento correspondiente.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled (np.ndarray): Datos de entrada escalados.
+y (np.ndarray): Etiquetas de los datos.
+kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+metodo (str): Método de entrenamiento a utilizar («RFC», «KNN», «ANN»).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Seleccion_ejecucion.n_jobs">
+<span class="sig-prename descclassname"><span class="pre">Seleccion_ejecucion.</span></span><span class="sig-name descname"><span class="pre">n_jobs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Seleccion_ejecucion.html#n_jobs"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Seleccion_ejecucion.n_jobs" title="Link to this definition"></a></dt>
+<dd><p>Entrena un modelo de clasificación utilizando múltiples trabajos en paralelo.
+Solo se utiliza para el método «RFC» o «KNN».</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X_scaled (np.ndarray): Datos de entrada escalados.
+y (np.ndarray): Etiquetas de los datos.
+kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+metodo (str): Método de entrenamiento a utilizar («RFC», «KNN»).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="Seleccion_ejecucion.single">
+<span class="sig-prename descclassname"><span class="pre">Seleccion_ejecucion.</span></span><span class="sig-name descname"><span class="pre">single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X_scaled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kfold</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Seleccion_ejecucion.html#single"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Seleccion_ejecucion.single" title="Link to this definition"></a></dt>
+<dd><p>Realiza el entrenamiento del modelo de manera secuencial.
+Según el valor metodo llamará a la función de entrenamiento correspondiente.
+Args:</p>
+<blockquote>
+<div><p>X_scaled (np.ndarray): Datos de entrada escalados.
+y (np.ndarray): Etiquetas de los datos.
+kfold (StratifiedKFold): Objeto de validación cruzada estratificada.
+metodo (str): Método de entrenamiento a utilizar («RFC», «KNN», «ANN»).</p>
+</div></blockquote>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="Clustering.html" class="btn btn-neutral float-left" title="Funciones Clustering" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="Funciones_Visualizacion.html" class="btn btn-neutral float-right" title="Funciones Visualizacion" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Mahía, Iván Hermida Mella.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

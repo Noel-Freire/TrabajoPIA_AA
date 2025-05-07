@@ -1,0 +1,236 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>comparacion_n_covariables &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">comparacion_n_covariables</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para comparacion_n_covariables</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">leer_metricas</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_excel_file</span><span class="p">,</span> <span class="n">get_data</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">statistics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">kruskal</span><span class="p">,</span><span class="n">mannwhitneyu</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.sandbox.stats.multicomp</span><span class="w"> </span><span class="kn">import</span> <span class="n">MultiComparison</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+
+<div class="viewcode-block" id="diagrama_cajas">
+<a class="viewcode-back" href="../Funciones_Generales.html#comparacion_n_covariables.diagrama_cajas">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">diagrama_cajas</span><span class="p">(</span><span class="n">accuracy</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Genera un diagrama de cajas (boxplot) para comparar la precisión de diferentes modelos.</span>
+
+<span class="sd">    :param dict accuracy: Diccionario que contiene las precisiones de los modelos.</span>
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">],</span> <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">]]</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Extracción de características&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">tick_labels</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="s1">&#39;ICA features=4&#39;</span><span class="p">,</span>  <span class="s1">&#39;ICA features=8&#39;</span><span class="p">,</span> <span class="s1">&#39;ICA features=11&#39;</span><span class="p">,</span> <span class="s1">&#39;PCA features=4&#39;</span><span class="p">,</span> <span class="s1">&#39;PCA features=8&#39;</span><span class="p">,</span> <span class="s1">&#39;PCA features=11&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div>
+
+
+
+
+<div class="viewcode-block" id="comparar_todos_modelos">
+<a class="viewcode-back" href="../Funciones_Generales.html#comparacion_n_covariables.comparar_todos_modelos">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">comparar_todos_modelos</span><span class="p">(</span><span class="n">acc</span><span class="p">,</span><span class="n">modelo</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compara todos los modelos usando la prueba de Kruskal-Wallis y la prueba de Tukey si hay diferencias significativas.</span>
+
+<span class="sd">    :param dict acc: Diccionario con las precisiones de los modelos.</span>
+<span class="sd">    :return: El nombre del mejor modelo y su media de precisión.</span>
+<span class="sd">    :rtype: tuple(str, float)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.01</span>
+    <span class="n">F_statistic</span><span class="p">,</span> <span class="n">pVal</span> <span class="o">=</span> <span class="n">kruskal</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">])</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;resultados_&#39;</span><span class="o">+</span><span class="n">modelo</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1"> Comparación entre todos los modelos </span><span class="se">\n</span><span class="s1"> </span><span class="se">\n</span><span class="s1"> &#39;</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;p-valor KrusW: </span><span class="si">{</span><span class="n">pVal</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">pVal</span> <span class="o">&lt;=</span> <span class="n">alpha</span><span class="p">:</span> 
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Rechazamos la hipótesis: los modelos son diferentes</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">stacked_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">],</span> <span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">]))</span>
+            <span class="n">stacked_model</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;Default&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;ICA features=4&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;ICA features=8&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;ICA features=11&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;PCA features=4&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;PCA features=8&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">])),</span>
+                                       <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="s1">&#39;PCA features=11&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">]))))</span>
+
+            <span class="n">MultiComp</span> <span class="o">=</span> <span class="n">MultiComparison</span><span class="p">(</span><span class="n">stacked_data</span><span class="p">,</span> <span class="n">stacked_model</span><span class="p">)</span>
+            <span class="n">resultado_tukey</span> <span class="o">=</span> <span class="n">MultiComp</span><span class="o">.</span><span class="n">tukeyhsd</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">resultado_tukey</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="n">medias</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s1">&#39;Default&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;ICA features=4&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;ICA features=8&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;ICA features=11&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;PCA features=4&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;PCA features=8&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">]),</span>
+                <span class="s1">&#39;PCA features=11&#39;</span><span class="p">:</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">])</span>
+            <span class="p">}</span>
+            <span class="n">mejor_modelo</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">medias</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">medias</span><span class="o">.</span><span class="n">get</span><span class="p">)</span>
+            <span class="n">mejor_media</span> <span class="o">=</span> <span class="n">medias</span><span class="p">[</span><span class="n">mejor_modelo</span><span class="p">]</span>
+            <span class="c1"># Verificar si el mejor modelo es estadísticamente diferente de los demás</span>
+            <span class="n">modelos_similares</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">resultado_tukey</span><span class="o">.</span><span class="n">_results_table</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:])):</span>
+                <span class="n">grupo1</span><span class="p">,</span> <span class="n">grupo2</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">reject</span> <span class="o">=</span> <span class="n">resultado_tukey</span><span class="o">.</span><span class="n">_results_table</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:][</span><span class="n">i</span><span class="p">]</span>
+            <span class="c1"># Si el mejor modelo está en la comparación y no hay diferencia significativa (reject == False)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">grupo1</span> <span class="o">==</span> <span class="n">mejor_modelo</span> <span class="ow">or</span> <span class="n">grupo2</span> <span class="o">==</span> <span class="n">mejor_modelo</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">reject</span><span class="p">:</span>
+                <span class="n">modelos_similares</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">grupo1</span> <span class="k">if</span> <span class="n">grupo1</span> <span class="o">!=</span> <span class="n">mejor_modelo</span> <span class="k">else</span> <span class="n">grupo2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">modelos_similares</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mejor modelo: </span><span class="si">{</span><span class="n">mejor_modelo</span><span class="si">}</span><span class="s1"> con Accuracy media: </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">mejor_media</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, PERO es similar a: </span><span class="si">{</span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">modelos_similares</span><span class="p">)</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Mejor modelo: </span><span class="si">{</span><span class="n">mejor_modelo</span><span class="si">}</span><span class="s1"> con Accuracy media: </span><span class="si">{</span><span class="nb">float</span><span class="p">(</span><span class="n">mejor_media</span><span class="p">)</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">, y es es diferente al resto de modelos.</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">mejor_modelo</span><span class="p">,</span> <span class="n">mejor_media</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;Aceptamos la hipótesis: los modelos son iguales</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;PCA features=4 ==&gt;&#39;</span><span class="p">,</span> <span class="n">statistics</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">acc</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="inicio_comp">
+<a class="viewcode-back" href="../Funciones_Generales.html#comparacion_n_covariables.inicio_comp">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">inicio_comp</span><span class="p">(</span><span class="n">Param_default</span><span class="p">,</span><span class="n">ICA_4</span><span class="p">,</span><span class="n">ICA_8</span><span class="p">,</span><span class="n">ICA_11</span><span class="p">,</span><span class="n">PCA_4</span><span class="p">,</span><span class="n">PCA_8</span><span class="p">,</span><span class="n">PCA_11</span><span class="p">,</span><span class="n">modelo</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función principal que inicia el proceso de comparación de modelos.</span>
+
+<span class="sd">    Lee los archivos de precisión, compara modelos y guarda los resultados.</span>
+
+<span class="sd">    :return: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s1">&#39;resultados_&#39;</span><span class="o">+</span><span class="n">modelo</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;resultados_&#39;</span><span class="o">+</span><span class="n">modelo</span><span class="o">+</span><span class="s1">&#39;.txt&#39;</span><span class="p">)</span>  <span class="c1"># Elimina el archivo</span>
+    <span class="n">accuracy</span> <span class="o">=</span><span class="p">{</span><span class="s1">&#39;Param_default&#39;</span><span class="p">:[],</span> <span class="s1">&#39;ICA_4&#39;</span><span class="p">:[],</span> <span class="s1">&#39;ICA_8&#39;</span><span class="p">:[],</span> <span class="s1">&#39;ICA_11&#39;</span><span class="p">:[],</span> <span class="s1">&#39;PCA_4&#39;</span><span class="p">:[],</span> <span class="s1">&#39;PCA_8&#39;</span><span class="p">:[],</span> <span class="s1">&#39;PCA_11&#39;</span><span class="p">:[]}</span>
+    <span class="c1"># Accuracy parametros por defecto</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">Param_default</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;Param_default&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de HOG+SVC</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">ICA_4</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_4&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de LBP+SVC</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">ICA_8</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_8&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de HOG+XGBC</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">ICA_11</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;ICA_11&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de LBP+XGBC</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">PCA_4</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_4&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de HOG+RNN</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">PCA_8</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_8&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="c1"># Accuracy de LBP+RNN</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel_file</span><span class="p">(</span><span class="n">PCA_11</span><span class="p">)</span>
+    <span class="n">k_metrics</span><span class="p">,</span><span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">get_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">accuracy</span><span class="p">[</span><span class="s1">&#39;PCA_11&#39;</span><span class="p">]</span><span class="o">=</span><span class="n">k_metrics</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+
+    <span class="c1">#diagrama_cajas(accuracy)</span>
+    <span class="n">diagrama_cajas</span><span class="p">(</span><span class="n">accuracy</span><span class="p">)</span>
+    <span class="n">modelo</span><span class="p">,</span><span class="n">media</span><span class="o">=</span><span class="n">comparar_todos_modelos</span><span class="p">(</span><span class="n">accuracy</span><span class="p">,</span><span class="n">modelo</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Ivan Hermida.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

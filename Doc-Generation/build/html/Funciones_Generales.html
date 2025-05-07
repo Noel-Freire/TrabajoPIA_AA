@@ -1,0 +1,240 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funciones Generales &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="Funciones Clustering" href="Clustering.html" />
+    <link rel="prev" title="Proyecto:_PIA_AA documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Funciones Generales</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#subir_datos.cargar_datos"><code class="docutils literal notranslate"><span class="pre">cargar_datos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#normalizar.normalizar_datos"><code class="docutils literal notranslate"><span class="pre">normalizar_datos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#guardar_metricas.guardar_metricas"><code class="docutils literal notranslate"><span class="pre">guardar_metricas()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#metricas_clustering.guardar_metricas_clustering"><code class="docutils literal notranslate"><span class="pre">guardar_metricas_clustering()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparacion_n_covariables.comparar_todos_modelos"><code class="docutils literal notranslate"><span class="pre">comparar_todos_modelos()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparacion_n_covariables.diagrama_cajas"><code class="docutils literal notranslate"><span class="pre">diagrama_cajas()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#comparacion_n_covariables.inicio_comp"><code class="docutils literal notranslate"><span class="pre">inicio_comp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Funciones Generales</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Funciones_Generales.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-subir_datos">
+<span id="funciones-generales"></span><h1>Funciones Generales<a class="headerlink" href="#module-subir_datos" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="subir_datos.cargar_datos">
+<span class="sig-prename descclassname"><span class="pre">subir_datos.</span></span><span class="sig-name descname"><span class="pre">cargar_datos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/subir_datos.html#cargar_datos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#subir_datos.cargar_datos" title="Link to this definition"></a></dt>
+<dd><p>Carga los datos de un archivo CSV.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>path (str): Ruta de los datos a normalizar.
+target (str): Nombre de la columna que contiene las etiquetas.</p>
+</dd>
+<dt>Returns:</dt><dd><p>X (Dataframe): Datos que se enviarán al modelo.
+y (Series): Etiquetas de cada dato.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-normalizar">
+<dt class="sig sig-object py" id="normalizar.normalizar_datos">
+<span class="sig-prename descclassname"><span class="pre">normalizar.</span></span><span class="sig-name descname"><span class="pre">normalizar_datos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/normalizar.html#normalizar_datos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#normalizar.normalizar_datos" title="Link to this definition"></a></dt>
+<dd><p>Normaliza los datos utilizando StandardScaler (media 0, desviación típica 1) de Scikit-Learn.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>x (Dataframe): Datos a normalizar.</p>
+</dd>
+<dt>Returns:</dt><dd><p>x_scaled (Dataframe): Datos normalizados.
+scalers (dict): Diccionario de scalers utilizados para cada columna.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-guardar_metricas">
+<dt class="sig sig-object py" id="guardar_metricas.guardar_metricas">
+<span class="sig-prename descclassname"><span class="pre">guardar_metricas.</span></span><span class="sig-name descname"><span class="pre">guardar_metricas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">histories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">roc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/guardar_metricas.html#guardar_metricas"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#guardar_metricas.guardar_metricas" title="Link to this definition"></a></dt>
+<dd><p>Guarda las métricas del modelo en un archivo Excel, incluyendo información sobre las predicciones, 
+evolución del entrenamiento y curvas ROC si están disponibles.</p>
+<p>El archivo Excel generado puede contener varias hojas:
+- <cite>k_metrics</cite>: Métricas generales del modelo por cada fold de la validación cruzada.
+- <cite>y_test</cite>: Clases reales de las imágenes utilizadas en la validación.
+- <cite>y_pred</cite>: Clases predichas por el modelo.
+- <cite>histories</cite> (opcional): Evolución del accuracy y la pérdida durante el entrenamiento.
+- <cite>roc</cite> (opcional): Datos para la curva ROC global y por clases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<em>int</em>) – Número de folds en la validación cruzada.</p></li>
+<li><p><strong>metrics</strong> (<em>dict</em>) – Diccionario con las métricas del modelo, incluyendo las predicciones y opcionalmente 
+datos de entrenamiento y curvas ROC.</p></li>
+<li><p><strong>file</strong> (<em>str</em>) – Nombre del archivo Excel donde se guardarán las métricas.</p></li>
+<li><p><strong>histories</strong> (<em>bool</em>) – Indica si <cite>metrics</cite> contiene los datos de evolución del accuracy y pérdida.</p></li>
+<li><p><strong>roc</strong> (<em>bool</em>) – Indica si <cite>metrics</cite> contiene los datos para generar curvas ROC.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo genera y guarda un archivo Excel con las métricas.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-metricas_clustering">
+<dt class="sig sig-object py" id="metricas_clustering.guardar_metricas_clustering">
+<span class="sig-prename descclassname"><span class="pre">metricas_clustering.</span></span><span class="sig-name descname"><span class="pre">guardar_metricas_clustering</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etiquetas_real</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">etiquetas_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroides</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/metricas_clustering.html#guardar_metricas_clustering"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#metricas_clustering.guardar_metricas_clustering" title="Link to this definition"></a></dt>
+<dd><p>Guarda las métricas de evaluación, etiquetas reales, etiquetas predichas y, si están disponibles, 
+los centroides del clustering en un archivo Excel.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>file (str): Ruta y nombre del archivo Excel donde se guardarán los resultados.
+metrics (dict): Diccionario con métricas de evaluación (V-Measure e Índice de Rand ajustado).
+etiquetas_real (array-like): Etiquetas reales de los datos.
+etiquetas_pred (array-like): Etiquetas asignadas por el modelo de clustering.
+centroides (ndarray, optional): Coordenadas de los centroides de los clústers (si aplica).</p>
+</dd>
+<dt>Returns:</dt><dd><p>None: Los datos se guardan en el archivo Excel especificado.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-comparacion_n_covariables">
+<dt class="sig sig-object py" id="comparacion_n_covariables.comparar_todos_modelos">
+<span class="sig-prename descclassname"><span class="pre">comparacion_n_covariables.</span></span><span class="sig-name descname"><span class="pre">comparar_todos_modelos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">acc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/comparacion_n_covariables.html#comparar_todos_modelos"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#comparacion_n_covariables.comparar_todos_modelos" title="Link to this definition"></a></dt>
+<dd><p>Compara todos los modelos usando la prueba de Kruskal-Wallis y la prueba de Tukey si hay diferencias significativas.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>acc</strong> (<em>dict</em>) – Diccionario con las precisiones de los modelos.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>El nombre del mejor modelo y su media de precisión.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple(str, float)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="comparacion_n_covariables.diagrama_cajas">
+<span class="sig-prename descclassname"><span class="pre">comparacion_n_covariables.</span></span><span class="sig-name descname"><span class="pre">diagrama_cajas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">accuracy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/comparacion_n_covariables.html#diagrama_cajas"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#comparacion_n_covariables.diagrama_cajas" title="Link to this definition"></a></dt>
+<dd><p>Genera un diagrama de cajas (boxplot) para comparar la precisión de diferentes modelos.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>accuracy</strong> (<em>dict</em>) – Diccionario que contiene las precisiones de los modelos.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="comparacion_n_covariables.inicio_comp">
+<span class="sig-prename descclassname"><span class="pre">comparacion_n_covariables.</span></span><span class="sig-name descname"><span class="pre">inicio_comp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Param_default</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ICA_4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ICA_8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ICA_11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PCA_4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PCA_8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">PCA_11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modelo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/comparacion_n_covariables.html#inicio_comp"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#comparacion_n_covariables.inicio_comp" title="Link to this definition"></a></dt>
+<dd><p>Función principal que inicia el proceso de comparación de modelos.</p>
+<p>Lee los archivos de precisión, compara modelos y guarda los resultados.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="index.html" class="btn btn-neutral float-left" title="Proyecto:_PIA_AA documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="Clustering.html" class="btn btn-neutral float-right" title="Funciones Clustering" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Mahía, Iván Hermida Mella.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

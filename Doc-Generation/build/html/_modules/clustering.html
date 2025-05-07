@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>clustering &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">clustering</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para clustering</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Librería NumPy</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="c1"># Librería Datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="c1"># Librería Scikit-Learn</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cluster</span><span class="w"> </span><span class="kn">import</span> <span class="n">KMeans</span><span class="p">,</span> <span class="n">DBSCAN</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">silhouette_score</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">NearestNeighbors</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">v_measure_score</span><span class="p">,</span> <span class="n">adjusted_rand_score</span>
+<span class="c1"># Librería MatPlotLib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="c1"># Funciones del módulo &#39;metricas_clustering.py&#39;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">metricas_clustering</span><span class="w"> </span><span class="kn">import</span> <span class="n">guardar_metricas_clustering</span>
+<span class="c1"># Funciones del módulo &#39;tsne.py&#39;</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">tsne</span><span class="w"> </span><span class="kn">import</span> <span class="n">tsne</span>
+
+<div class="viewcode-block" id="kmeans">
+<a class="viewcode-back" href="../Clustering.html#clustering.kmeans">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">kmeans</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aplica el algoritmo k-Means para encontrar el número óptimo de clústers </span>
+<span class="sd">    utilizando las métricas de inercia y coeficiente de silueta. Guarda los resultados </span>
+<span class="sd">    y visualiza los clústers con t-SNE.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (ndarray): Datos de entrada para el clustering.</span>
+<span class="sd">        y (array-like): Etiquetas reales de los datos (para evaluación).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None: Los resultados se guardan en un archivo Excel y se muestra una gráfica.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fecha_hora&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;v_measure&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;adjusted_rand_index&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">modelos</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">inercias</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">coefs_silueta</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">k_rango</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>  <span class="c1"># Valores de k desde 2 hasta 10</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">k_rango</span><span class="p">:</span>
+        <span class="n">modelo</span> <span class="o">=</span> <span class="n">KMeans</span><span class="p">(</span><span class="n">n_clusters</span><span class="o">=</span><span class="n">k</span><span class="p">,</span> <span class="n">init</span><span class="o">=</span><span class="s1">&#39;k-means++&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">modelos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">modelo</span><span class="p">)</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">labels_</span>
+        <span class="n">coef_silueta</span> <span class="o">=</span> <span class="n">silhouette_score</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+        <span class="n">inercias</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">modelo</span><span class="o">.</span><span class="n">inertia_</span><span class="p">)</span>
+        <span class="n">coefs_silueta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">coef_silueta</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_rango</span><span class="p">,</span> <span class="n">inercias</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Inercia&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Inercia&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">ax1</span><span class="o">.</span><span class="n">twinx</span><span class="p">()</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">k_rango</span><span class="p">,</span> <span class="n">coefs_silueta</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Coef. Silueta&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Coeficiente de silueta&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelcolor</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Inercia y Coeficiente de silueta vs Nº de clústers&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">mejor_k_inercia</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">inercias</span><span class="p">)</span>
+    <span class="n">mejor_k_coef_silueta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">coefs_silueta</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El mejor valor de inercia es </span><span class="si">{</span><span class="n">inercias</span><span class="p">[</span><span class="n">mejor_k_inercia</span><span class="p">]</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> y se consigue con k=</span><span class="si">{</span><span class="n">mejor_k_inercia</span><span class="o">+</span><span class="mi">2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;El mejor valor de coeficiente de silueta es </span><span class="si">{</span><span class="n">coefs_silueta</span><span class="p">[</span><span class="n">mejor_k_coef_silueta</span><span class="p">]</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1"> y se consigue con k=</span><span class="si">{</span><span class="n">mejor_k_coef_silueta</span><span class="o">+</span><span class="mi">2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">mejor_modelo</span> <span class="o">=</span> <span class="n">modelos</span><span class="p">[</span><span class="n">mejor_k_coef_silueta</span><span class="p">]</span>
+    <span class="n">etiquetas</span> <span class="o">=</span> <span class="n">mejor_modelo</span><span class="o">.</span><span class="n">labels_</span>
+    <span class="n">centroides</span> <span class="o">=</span> <span class="n">mejor_modelo</span><span class="o">.</span><span class="n">cluster_centers_</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;fecha_hora&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m-%Y %H:%M&quot;</span><span class="p">))</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;v_measure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_measure_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">))</span>
+    <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;adjusted_rand_index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adjusted_rand_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">))</span>
+    <span class="n">guardar_metricas_clustering</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">&#39;Resultados_kmeans.xlsx&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">etiquetas_real</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas_pred</span><span class="o">=</span><span class="n">etiquetas</span><span class="p">,</span> <span class="n">centroides</span><span class="o">=</span><span class="n">centroides</span><span class="p">)</span>
+    <span class="n">tsne</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">,</span> <span class="s1">&#39;k-medias (k=2)&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dbscan">
+<a class="viewcode-back" href="../Clustering.html#clustering.dbscan">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dbscan</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Aplica el algoritmo DBSCAN, calcula métricas </span>
+<span class="sd">    de calidad del clustering y visualiza la distribución de distancias para </span>
+<span class="sd">    seleccionar un buen valor de epsilon.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        x (ndarray): Datos de entrada para el clustering.</span>
+<span class="sd">        y (array-like): Etiquetas reales de los datos (para evaluación).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        None: Los resultados se guardan en un archivo Excel y se muestra una gráfica.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;fecha_hora&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;epsilon&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;v_measure&quot;</span><span class="p">:</span> <span class="p">[],</span> <span class="s2">&quot;adjusted_rand_index&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">neigh</span> <span class="o">=</span> <span class="n">NearestNeighbors</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># minPts = 2 * dimensión</span>
+    <span class="n">neigh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">k_distancias</span><span class="p">,</span> <span class="n">indices</span> <span class="o">=</span> <span class="n">neigh</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="n">distancia_k</span> <span class="o">=</span> <span class="n">k_distancias</span><span class="p">[:,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">distancia_k_ordenada</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">distancia_k</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">distancia_k_ordenada</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Distancias ordenadas a los 42-vecinos más cercanos&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">modelo</span> <span class="o">=</span> <span class="n">DBSCAN</span><span class="p">(</span><span class="n">eps</span><span class="o">=</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span><span class="p">,</span> <span class="n">min_samples</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">etiquetas</span> <span class="o">=</span> <span class="n">modelo</span><span class="o">.</span><span class="n">fit_predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Grupos detectados: </span><span class="si">{</span><span class="n">etiquetas</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">etiquetas</span><span class="p">)]</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># Se suma 1 porque al primer grupo se le asigna el valor 0</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Datos clasificados como ruido: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">etiquetas</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;fecha_hora&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="s2">-%m-%Y %H:%M&quot;</span><span class="p">))</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;epsilon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">/</span><span class="mi">10</span><span class="p">)</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;v_measure&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v_measure_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">))</span>
+        <span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;adjusted_rand_index&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">adjusted_rand_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">))</span>
+    <span class="n">guardar_metricas_clustering</span><span class="p">(</span><span class="n">file</span><span class="o">=</span><span class="s1">&#39;Resultados_DBSCAN.xlsx&#39;</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">,</span> <span class="n">etiquetas_real</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">etiquetas_pred</span><span class="o">=</span><span class="n">etiquetas</span><span class="p">)</span>
+    <span class="n">tsne</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">etiquetas</span><span class="p">,</span> <span class="s1">&#39;DBSCAN (eps = 2.9)&#39;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Ivan Hermida.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

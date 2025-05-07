@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Funciones Visualizacion &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=4936afed"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="prev" title="Funciones de Reducción de Dimensionalidad" href="Reduccion_Dimension.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Funciones Visualizacion</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tsne.tsne"><code class="docutils literal notranslate"><span class="pre">tsne()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.plot_accuracy_evolution"><code class="docutils literal notranslate"><span class="pre">plot_accuracy_evolution()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.plot_classes_roc_curves"><code class="docutils literal notranslate"><span class="pre">plot_classes_roc_curves()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.plot_confusion_matrix"><code class="docutils literal notranslate"><span class="pre">plot_confusion_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.plot_metrics"><code class="docutils literal notranslate"><span class="pre">plot_metrics()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.plot_roc_curves"><code class="docutils literal notranslate"><span class="pre">plot_roc_curves()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leer_metricas.read_excel_file"><code class="docutils literal notranslate"><span class="pre">read_excel_file()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Matriz_correlacion.Variables_correlacion"><code class="docutils literal notranslate"><span class="pre">Variables_correlacion()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Principales_caracteristicas.pca"><code class="docutils literal notranslate"><span class="pre">pca()</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Funciones Visualizacion</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/Funciones_Visualizacion.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-tsne">
+<span id="funciones-visualizacion"></span><h1>Funciones Visualizacion<a class="headerlink" href="#module-tsne" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="tsne.tsne">
+<span class="sig-prename descclassname"><span class="pre">tsne.</span></span><span class="sig-name descname"><span class="pre">tsne</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metodo</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tsne.html#tsne"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#tsne.tsne" title="Link to this definition"></a></dt>
+<dd><p>Representa el conjunto de datos en 2D aplicando la reducción de dimensionalidad con t-SNE.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>x (ndarray): Datos originales de entrada.
+cluster_labels (array-like): Etiquetas de cada dato.
+metodo (str): Nombre del método de clustering utilizado (para el título del gráfico).</p>
+</dd>
+<dt>Returns:</dt><dd><p>None: Muestra un gráfico con la representación t-SNE de los clústers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-leer_metricas">
+<dt class="sig sig-object py" id="leer_metricas.get_data">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excel_data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#get_data"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.get_data" title="Link to this definition"></a></dt>
+<dd><p>Extrae las métricas almacenadas en el diccionario generado por <cite>read_excel_file</cite>, 
+separándolas en distintos DataFrames.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>excel_data</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>pandas.DataFrame</em><em>]</em>) – Diccionario con los datos del modelo.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>k_metrics</strong> (<em>pandas.DataFrame</em>): Métricas generales del modelo por fold.</p></li>
+<li><p><strong>y_test</strong> (<em>pandas.DataFrame</em>): Clases reales de cada imagen.</p></li>
+<li><p><strong>y_pred</strong> (<em>pandas.DataFrame</em>): Clases predichas por el modelo.</p></li>
+<li><p><strong>histories</strong> (<em>pandas.DataFrame</em>): Evolución del accuracy y pérdida (si está disponible).</p></li>
+<li><p><strong>roc</strong> (<em>pandas.DataFrame</em>): Datos para la curva ROC y AUC (si está disponible).</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple[pandas.DataFrame, pandas.DataFrame, pandas.DataFrame, pandas.DataFrame, pandas.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.plot_accuracy_evolution">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">plot_accuracy_evolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">histories</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#plot_accuracy_evolution"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.plot_accuracy_evolution" title="Link to this definition"></a></dt>
+<dd><p>Muestra la evolución del accuracy en entrenamiento y validación a lo largo de las iteraciones.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>histories</strong> (<em>pandas.DataFrame</em>) – DataFrame con la evolución del accuracy y la pérdida 
+en entrenamiento y validación.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo muestra la gráfica de evolución del accuracy.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.plot_classes_roc_curves">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">plot_classes_roc_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#plot_classes_roc_curves"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.plot_classes_roc_curves" title="Link to this definition"></a></dt>
+<dd><p>Genera y muestra las curvas ROC individuales para cada clase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>roc</strong> (<em>pandas.DataFrame</em>) – DataFrame con los datos de la curva ROC por clase.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo muestra las curvas ROC por clase.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.plot_confusion_matrix">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">plot_confusion_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_test</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#plot_confusion_matrix"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.plot_confusion_matrix" title="Link to this definition"></a></dt>
+<dd><p>Genera y muestra una matriz de confusión para cada fold de validación.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_test</strong> (<em>pandas.DataFrame</em>) – DataFrame con las clases reales.</p></li>
+<li><p><strong>y_pred</strong> (<em>pandas.DataFrame</em>) – DataFrame con las clases predichas.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo muestra la matriz de confusión.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.plot_metrics">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">plot_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excel_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#plot_metrics"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.plot_metrics" title="Link to this definition"></a></dt>
+<dd><p>Genera y muestra visualizaciones clave de las métricas obtenidas durante el entrenamiento de un modelo, incluyendo:</p>
+<ul class="simple">
+<li><p>Matriz de confusión para evaluar el desempeño del modelo en la clasificación.</p></li>
+<li><p>Curvas ROC global y por clase para analizar la capacidad de discriminación del modelo.</p></li>
+<li><p>Evolución del accuracy en entrenamiento y validación a lo largo de las iteraciones.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>excel_file</strong> (<em>str</em>) – Ruta del archivo Excel que contiene los resultados del modelo.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo genera y muestra las visualizaciones correspondientes.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.plot_roc_curves">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">plot_roc_curves</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">roc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#plot_roc_curves"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.plot_roc_curves" title="Link to this definition"></a></dt>
+<dd><p>Genera y muestra la curva ROC global junto con el área bajo la curva (AUC).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>roc</strong> (<em>pandas.DataFrame</em>) – DataFrame con los datos para la curva ROC global.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>No retorna ningún valor, solo muestra la curva ROC.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="leer_metricas.read_excel_file">
+<span class="sig-prename descclassname"><span class="pre">leer_metricas.</span></span><span class="sig-name descname"><span class="pre">read_excel_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excel_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/leer_metricas.html#read_excel_file"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#leer_metricas.read_excel_file" title="Link to this definition"></a></dt>
+<dd><p>Lee un archivo Excel y devuelve su contenido en un diccionario, donde cada clave 
+representa el nombre de una hoja y su valor correspondiente es un DataFrame con los datos de dicha hoja.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>excel_file</strong> (<em>str</em>) – Ruta del archivo Excel a leer.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>Diccionario con los datos de cada hoja en formato DataFrame.</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict[str, pandas.DataFrame]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-Matriz_correlacion">
+<dt class="sig sig-object py" id="Matriz_correlacion.Variables_correlacion">
+<span class="sig-prename descclassname"><span class="pre">Matriz_correlacion.</span></span><span class="sig-name descname"><span class="pre">Variables_correlacion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_pca</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Matriz_correlacion.html#Variables_correlacion"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Matriz_correlacion.Variables_correlacion" title="Link to this definition"></a></dt>
+<dd><p>Función que calcula la matriz de correlación entre las variables originales y la variable de salida,</p>
+<p>y entre las variables transformadas por PCA y la variable de salida.
+Se muestran las matrices de correlación en dos gráficos diferentes.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>X (Dataframe): Datos no normalizados.
+x_pca (ndarray): Matriz de características transformadas por PCA.
+y(Series): Vector de las variables de salida del modelo.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-Principales_caracteristicas">
+<dt class="sig sig-object py" id="Principales_caracteristicas.pca">
+<span class="sig-prename descclassname"><span class="pre">Principales_caracteristicas.</span></span><span class="sig-name descname"><span class="pre">pca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_scaled</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/Principales_caracteristicas.html#pca"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#Principales_caracteristicas.pca" title="Link to this definition"></a></dt>
+<dd><p>Realiza PCA sobre los datos escalados y visualiza la varianza explicada por cada componente principal.</p>
+<p>Args:
+x_scaled (DataFrame): Datos escalados.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>x_pca (ndarray): Datos que se enviarán al modelo.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="Reduccion_Dimension.html" class="btn btn-neutral float-left" title="Funciones de Reducción de Dimensionalidad" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Mahía, Iván Hermida Mella.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

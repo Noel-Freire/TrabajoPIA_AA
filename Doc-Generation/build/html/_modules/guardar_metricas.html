@@ -1,0 +1,178 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>guardar_metricas &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">guardar_metricas</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para guardar_metricas</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Librería Pandas</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<div class="viewcode-block" id="guardar_metricas">
+<a class="viewcode-back" href="../Funciones_Generales.html#guardar_metricas.guardar_metricas">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">guardar_metricas</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">file</span><span class="p">,</span> <span class="n">histories</span><span class="p">,</span> <span class="n">roc</span><span class="p">,</span><span class="n">n_jobs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Guarda las métricas del modelo en un archivo Excel, incluyendo información sobre las predicciones, </span>
+<span class="sd">    evolución del entrenamiento y curvas ROC si están disponibles.</span>
+
+<span class="sd">    El archivo Excel generado puede contener varias hojas:</span>
+<span class="sd">    - `k_metrics`: Métricas generales del modelo por cada fold de la validación cruzada.</span>
+<span class="sd">    - `y_test`: Clases reales de las imágenes utilizadas en la validación.</span>
+<span class="sd">    - `y_pred`: Clases predichas por el modelo.</span>
+<span class="sd">    - `histories` (opcional): Evolución del accuracy y la pérdida durante el entrenamiento.</span>
+<span class="sd">    - `roc` (opcional): Datos para la curva ROC global y por clases.</span>
+
+<span class="sd">    :param int k: Número de folds en la validación cruzada.</span>
+<span class="sd">    :param dict metrics: Diccionario con las métricas del modelo, incluyendo las predicciones y opcionalmente </span>
+<span class="sd">                         datos de entrenamiento y curvas ROC.</span>
+<span class="sd">    :param str file: Nombre del archivo Excel donde se guardarán las métricas.</span>
+<span class="sd">    :param bool histories: Indica si `metrics` contiene los datos de evolución del accuracy y pérdida.</span>
+<span class="sd">    :param bool roc: Indica si `metrics` contiene los datos para generar curvas ROC.</span>
+<span class="sd">    :return: No retorna ningún valor, solo genera y guarda un archivo Excel con las métricas.</span>
+<span class="sd">    :rtype: None</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">metrics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span>
+    <span class="n">metrics_df</span><span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n_jobs</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fecha_hora&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;f1_score&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_secuencial&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_multihilo&quot;</span><span class="p">]</span><span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_multiproceso&quot;</span><span class="p">]</span><span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_n_jobs&quot;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fecha_hora&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;fold&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;precision&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;recall&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;f1_score&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_secuencial&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_multihilo&quot;</span><span class="p">]</span><span class="o">+</span> <span class="p">[</span><span class="s2">&quot;tiempo_multiproceso&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;C&#39;</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;C&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;solver&#39;</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;solver&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;penalty&#39;</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;penalty&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;max_iter&#39;</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;max_iter&#39;</span><span class="p">]</span>
+    <span class="n">k_metrics_df</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
+    <span class="n">y_test_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;y_val&#39;</span><span class="p">])</span>
+    <span class="n">y_pred_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">metrics</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">histories</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;train_loss&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;train_accuracy&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;val_loss&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">]</span>
+        <span class="n">histories_df</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">roc</span> <span class="o">==</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;fpr_micro&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;tpr_micro&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;auc&#39;</span><span class="p">]</span> 
+        <span class="n">roc_df</span> <span class="o">=</span> <span class="n">metrics_df</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">histories</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">roc</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">k_metrics_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;k_metrics&#39;</span><span class="p">)</span>
+            <span class="n">y_test_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_test&#39;</span><span class="p">)</span>
+            <span class="n">y_pred_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_pred&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">histories</span> <span class="o">==</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">roc</span> <span class="o">==</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">k_metrics_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;k_metrics&#39;</span><span class="p">)</span>
+            <span class="n">y_test_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_test&#39;</span><span class="p">)</span>
+            <span class="n">y_pred_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_pred&#39;</span><span class="p">)</span>
+            <span class="n">histories_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;histories&#39;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">histories</span> <span class="o">==</span> <span class="kc">False</span> <span class="ow">and</span> <span class="n">roc</span> <span class="o">==</span> <span class="kc">True</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">k_metrics_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;k_metrics&#39;</span><span class="p">)</span>
+            <span class="n">y_test_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_test&#39;</span><span class="p">)</span>
+            <span class="n">y_pred_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_pred&#39;</span><span class="p">)</span>
+            <span class="n">roc_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;roc&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">pd</span><span class="o">.</span><span class="n">ExcelWriter</span><span class="p">(</span><span class="n">file</span><span class="p">)</span> <span class="k">as</span> <span class="n">writer</span><span class="p">:</span>
+            <span class="n">k_metrics_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;k_metrics&#39;</span><span class="p">)</span>
+            <span class="n">y_test_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_test&#39;</span><span class="p">)</span>
+            <span class="n">y_pred_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;y_pred&#39;</span><span class="p">)</span>
+            <span class="n">histories_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;histories&#39;</span><span class="p">)</span>
+            <span class="n">roc_df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">writer</span><span class="p">,</span> <span class="n">sheet_name</span><span class="o">=</span><span class="s1">&#39;roc&#39;</span><span class="p">)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Ivan Hermida.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,8 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Funciones Generales}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Funciones Clustering}{5}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Funciones de Reducción de Dimensionalidad}{7}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Funciones Visualizacion}{11}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Indices y tablas}{15}{chapter.5}%
+\contentsline {chapter}{Índice de Módulos Python}{17}{section*.45}%
+\contentsline {chapter}{Índice}{19}{section*.46}%

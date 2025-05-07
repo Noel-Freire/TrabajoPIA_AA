@@ -1,0 +1,302 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>entrenar_modelos &mdash; documentación de Proyecto:_PIA_AA - 1.0</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=4936afed"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Proyecto:_PIA_AA
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Generales.html">Funciones Generales</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Clustering.html">Funciones Clustering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Reduccion_Dimension.html">Funciones de Reducción de Dimensionalidad</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Funciones_Visualizacion.html">Funciones Visualizacion</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Proyecto:_PIA_AA</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Código de módulo</a></li>
+      <li class="breadcrumb-item active">entrenar_modelos</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para entrenar_modelos</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.ensemble</span><span class="w"> </span><span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.neighbors</span><span class="w"> </span><span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.base</span><span class="w"> </span><span class="kn">import</span> <span class="n">clone</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">tensorflow.keras</span><span class="w"> </span><span class="kn">import</span> <span class="n">optimizers</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">,</span> <span class="n">models</span><span class="p">,</span> <span class="n">layers</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tensorflow</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">tf</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<div class="viewcode-block" id="entrenar_modelo_rfc">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.entrenar_modelo_rfc">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">entrenar_modelo_rfc</span><span class="p">(</span> <span class="n">X_scaled</span><span class="p">,</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">val_idx</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que entrena el modelo de Random Forest utilizando diferentes métodos (secuencial, multihilo, multiproceso).</span>
+<span class="sd">    </span>
+<span class="sd">    Args:</span>
+<span class="sd">        X_scaled (array): Datos de entrada escalados.</span>
+<span class="sd">        train_idx (array): Índices de entrenamiento.</span>
+<span class="sd">        val_idx (array): Índices de validación.</span>
+<span class="sd">        y (array): Etiquetas de clase.</span>
+<span class="sd">        mode (str): Modo de entrenamiento (&#39;secuencial&#39;, &#39;multihilo&#39;, &#39;multiproceso&#39;, &#39;n_jobs&#39;).</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        modelo_fold (RandomForestClassifier): Modelo entrenado.</span>
+<span class="sd">        x_val (array): Datos de validación.</span>
+<span class="sd">        y_val (array): Etiquetas de validación.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entrenando modelo RFC &quot;</span><span class="p">,{</span><span class="n">mode</span><span class="p">},</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+    <span class="n">parametros_RFC</span> <span class="o">=</span> <span class="n">param_RFC</span><span class="p">()</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">x_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">modelo_fold</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">RandomForestClassifier</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;n_jobs&quot;</span><span class="p">:</span>
+        <span class="n">n_jobs_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_jobs_value</span> <span class="o">=</span> <span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">modelo_fold</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span>
+        <span class="n">n_estimators</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;n_estimators&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">max_depth</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;max_depth&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs_value</span><span class="p">,</span>
+        <span class="n">criterion</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;criterion&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">max_features</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;max_features&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">bootstrap</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;bootstrap&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">random_state</span><span class="o">=</span><span class="n">parametros_RFC</span><span class="p">[</span><span class="s1">&#39;random_state&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">modelo_fold</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">modelo_fold</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span></div>
+
+
+<div class="viewcode-block" id="param_RFC">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.param_RFC">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">param_RFC</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que define los parámetros del modelo Random Forest.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        parametros_RFC (dict): Parámetros del modelo Random Forest.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parametros_RFC</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;n_estimators&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1000</span><span class="p">],</span>          <span class="c1"># Número de árboles en el bosque</span>
+        <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">],</span>                <span class="c1"># Profundidad máxima de cada árbol</span>
+        <span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span>                  <span class="c1"># Usar todos los núcleos disponibles</span>
+        <span class="s1">&#39;criterion&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;gini&#39;</span><span class="p">],</span>           <span class="c1"># Alternativa: &#39;entropy&#39;</span>
+        <span class="s1">&#39;max_features&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;sqrt&#39;</span><span class="p">],</span>        <span class="c1"># Cuántas características considerar al dividir</span>
+        <span class="s1">&#39;bootstrap&#39;</span><span class="p">:</span> <span class="p">[</span><span class="kc">True</span><span class="p">],</span>             <span class="c1"># Si usar muestreo con reemplazo</span>
+        <span class="s1">&#39;random_state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>              <span class="c1"># Para reproducibilidad</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">parametros_RFC</span></div>
+
+
+
+<div class="viewcode-block" id="entrenar_modelo_knn">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.entrenar_modelo_knn">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">entrenar_modelo_knn</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">val_idx</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que entrena el modelo K-Nearest Neighbors utilizando diferentes métodos (secuencial, multihilo, multiproceso).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X_scaled (array): Datos de entrada escalados.</span>
+<span class="sd">        train_idx (array): Índices de entrenamiento.</span>
+<span class="sd">        val_idx (array): Índices de validación.</span>
+<span class="sd">        y (array): Etiquetas de clase.</span>
+<span class="sd">        mode (str): Modo de entrenamiento (&#39;secuencial&#39;, &#39;multihilo&#39;, &#39;multiproceso&#39;, &#39;n_jobs&#39;).</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        modelo_fold (KNeighborsClassifier): Modelo entrenado.</span>
+<span class="sd">        x_val (array): Datos de validación.</span>
+<span class="sd">        y_val (array): Etiquetas de validación.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entrenando modelo KNN&quot;</span><span class="p">,{</span><span class="n">mode</span><span class="p">},</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+    <span class="n">parametros_KNN</span> <span class="o">=</span> <span class="n">param_KNN</span><span class="p">()</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">x_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">modelo_fold</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">KNeighborsClassifier</span><span class="p">())</span>
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s2">&quot;n_jobs&quot;</span><span class="p">:</span>
+        <span class="n">n_jobs_value</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">n_jobs_value</span> <span class="o">=</span> <span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;n_jobs&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">modelo_fold</span><span class="o">.</span><span class="n">set_params</span><span class="p">(</span>
+        <span class="n">n_neighbors</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;n_neighbors&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">weights</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;weights&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">algorithm</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;algorithm&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">leaf_size</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;leaf_size&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">n_jobs</span><span class="o">=</span><span class="n">n_jobs_value</span><span class="p">,</span>
+        <span class="n">metric</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;metric&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">p</span><span class="o">=</span><span class="n">parametros_KNN</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">modelo_fold</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">modelo_fold</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span></div>
+
+
+<div class="viewcode-block" id="param_KNN">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.param_KNN">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">param_KNN</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que define los parámetros del modelo KNN.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns:</span>
+<span class="sd">        parametros_KNN (dict): Parámetros del modelo KNN.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">parametros_KNN</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;n_neighbors&#39;</span><span class="p">:[</span><span class="mi">7</span><span class="p">],</span>
+        <span class="s1">&#39;weights&#39;</span><span class="p">:[</span><span class="s1">&#39;distance&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;algorithm&#39;</span><span class="p">:[</span><span class="s1">&#39;auto&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;leaf_size&#39;</span><span class="p">:[</span><span class="mi">40</span><span class="p">],</span>
+        <span class="s1">&#39;metric&#39;</span><span class="p">:[</span><span class="s1">&#39;minkowski&#39;</span><span class="p">],</span>
+        <span class="s1">&#39;n_jobs&#39;</span><span class="p">:[</span><span class="mi">1</span><span class="p">],</span>
+        <span class="s1">&#39;p&#39;</span><span class="p">:[</span><span class="mi">2</span> <span class="p">]</span>            
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">parametros_KNN</span></div>
+
+
+<div class="viewcode-block" id="entrenar_modelo_ann">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.entrenar_modelo_ann">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">entrenar_modelo_ann</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">,</span> <span class="n">train_idx</span><span class="p">,</span> <span class="n">val_idx</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span><span class="n">mode</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Función que entrena el modelo ANN utilizando diferentes métodos (secuencial, multihilo, multiproceso).</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        X_scaled (array): Datos de entrada escalados.</span>
+<span class="sd">        train_idx (array): Índices de entrenamiento.</span>
+<span class="sd">        val_idx (array): Índices de validación.</span>
+<span class="sd">        y (array): Etiquetas de clase.</span>
+<span class="sd">        mode (str): Modo de entrenamiento (&#39;secuencial&#39;, &#39;multihilo&#39;, &#39;multiproceso&#39;, &#39;n_jobs&#39;).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        model (Sequential): Modelo entrenado.</span>
+<span class="sd">        x_val (array): Datos de validación.</span>
+<span class="sd">        y_val (array): Etiquetas de validación.</span>
+<span class="sd">        history (History): Historial del entrenamiento.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Entrenando modelo ANN&quot;</span><span class="p">,{</span><span class="n">mode</span><span class="p">},</span><span class="s2">&quot;...&quot;</span><span class="p">)</span>
+    <span class="n">x_train</span><span class="p">,</span> <span class="n">x_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_scaled</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">train_idx</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)[</span><span class="n">val_idx</span><span class="p">]</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">define_model_ann</span><span class="p">(</span><span class="n">caracteristicas</span><span class="o">=</span><span class="n">x_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">num_clases</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizers</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.002</span><span class="p">),</span>
+        <span class="n">loss</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">losses</span><span class="o">.</span><span class="n">SparseCategoricalCrossentropy</span><span class="p">(),</span>
+        <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;accuracy&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">earlystop_callback</span> <span class="o">=</span> <span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s1">&#39;val_accuracy&#39;</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">restore_best_weights</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+        <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span>
+        <span class="n">batch_size</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
+        <span class="n">epochs</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+        <span class="n">validation_data</span><span class="o">=</span><span class="p">(</span><span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">),</span>
+        <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">callbacks</span><span class="o">=</span><span class="p">[</span><span class="n">earlystop_callback</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_val</span><span class="p">,</span><span class="n">history</span></div>
+
+
+
+
+<div class="viewcode-block" id="define_model_ann">
+<a class="viewcode-back" href="../Reduccion_Dimension.html#entrenar_modelos.define_model_ann">[documentos]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">define_model_ann</span><span class="p">(</span><span class="n">caracteristicas</span><span class="p">,</span> <span class="n">num_clases</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Define un modelo de red neuronal con arquitectura ANN para clasificación multiclase.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        caracteristicas (int): Número de características de entrada.</span>
+<span class="sd">        num_clases (int): Número de clases para la clasificación.</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        model (Sequential): Modelo ANN compilado.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">Sequential</span><span class="p">([</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">caracteristicas</span><span class="p">,)),</span>  <span class="c1"># El tamaño de las características </span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.4</span><span class="p">),</span>  <span class="c1"># Dropout con tasa del 30%</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">64</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>  <span class="c1"># Capa densa con 64 neuronas y función de activación ReLU</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>  <span class="c1"># Normalización de lotes</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span>  <span class="c1"># Dropout con tasa del 30%</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;relu&#39;</span><span class="p">),</span>  <span class="c1"># Otra capa densa</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">BatchNormalization</span><span class="p">(),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dropout</span><span class="p">(</span><span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">layers</span><span class="o">.</span><span class="n">Dense</span><span class="p">(</span><span class="n">num_clases</span><span class="p">,</span> <span class="n">activation</span><span class="o">=</span><span class="s1">&#39;softmax&#39;</span><span class="p">)</span>  <span class="c1"># Capa de salida con 2</span>
+    <span class="p">])</span>
+    <span class="k">return</span> <span class="n">model</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Noel Freire Mahía, Iván Hermida Mella.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
